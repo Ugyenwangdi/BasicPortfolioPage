@@ -1,0 +1,80 @@
+1. py -3 -m venv env
+2. .\env\Scripts\activate
+3. pip install django
+4. django-admin startproject mywebsite
+5. cd mywebsite
+6. python manage.py runserver
+7. python manage.py startapp base
+8. Add base to settings installed app
+9. Create a folder called templates inside base (app)
+10. Create folder called base inside templates
+11. Create a home.html inside base
+12. Create a function to render the above template inside views
+'''
+def home(request):
+    return render(request, 'base/home.html')
+'''
+
+13. Create urls.py inside app
+'''
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home)
+]
+
+'''
+14. Take the urls of app to the urls in project's urls
+'''
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('base.urls'))
+]
+
+'''
+
+15. Try to run the server
+
+16. Let's add some css and images into it. Create a folder called staticfiles inside root directory(project folder) and inside it create folder images and css to keep our images and css file
+
+17. Configure the static files inside settings, static url and where to look for that folder... the name staticfiles can be whatever we want 
+'''
+import os
+STATIC_URL = '/staticfiles/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles')
+]
+
+'''
+
+18. Now we can import the static files dynamically in html templates using jinja
+'''
+{% load static %}
+<link href="{% static '/css/main.css'  %}" rel="stylesheet" type="text/css">
+
+'''
+
+19. Let's now throw an image in the home.html
+'''
+<img src="{% static 'images/dennisivanov.jpg' %}">
+
+'''
+
+20. Let settings.py know where the media file is 
+'''
+
+MEDIA_URL = '/images/'  
+
+'''
+21. python manage.py runserver
+
+22. Now do some styling using bootstrap
+'''
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+'''
